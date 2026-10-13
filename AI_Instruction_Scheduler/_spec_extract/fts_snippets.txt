@@ -1,0 +1,851 @@
+
+### QUERY: "PROJECT OBJECTIVE"
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…The project should be suitable for a college-level COA practical/ERLA demonstration.
+============================================================
+>>>PROJECT OBJECTIVE<<<
+============================================================
+
+Build an interactive simulator that demonstrates how AI-assisted
+instruction scheduling can improve CPU instruction execution.
+The system must allow a user to:
+Enter a set of CPU instructions.
+
+Parse and validate those instructions.
+
+Detect instruction dependencies.
+
+Identify scheduling opportunities.
+
+Generate a traditional/in-order execution schedule.
+
+Generate an…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…The project should be suitable for a college-level COA practical/ERLA demonstration.
+============================================================
+>>>PROJECT OBJECTIVE<<<
+============================================================
+
+Build an interactive simulator that demonstrates how AI-assisted
+instruction scheduling can improve CPU instruction execution.
+The system must allow a user to:
+Enter a set of CPU instructions.
+
+Parse and validate those instructions.
+
+Detect instruction dependencies.
+
+Identify scheduling opportunities.
+
+Generate a traditional/in-order execution schedule.
+
+Generate an…
+
+
+### QUERY: "TECHNOLOGY STACK"
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…traditional and AI scheduling.
+
+Clearly explain why the AI scheduler selected particular instructions.
+
+The final application must visually demonstrate the benefits of
+instruction scheduling rather than merely print theoretical concepts.
+============================================================
+2. >>>TECHNOLOGY STACK<<<
+============================================================
+Use:
+Python 3.10+
+
+Streamlit for the user interface
+
+Pandas for tabular data
+
+Optional NumPy for numerical processing
+
+No external paid APIs
+
+No cloud AI API dependency
+
+The project must run…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…traditional and AI scheduling.
+
+Clearly explain why the AI scheduler selected particular instructions.
+
+The final application must visually demonstrate the benefits of
+instruction scheduling rather than merely print theoretical concepts.
+============================================================
+2. >>>TECHNOLOGY STACK<<<
+============================================================
+Use:
+Python 3.10+
+
+Streamlit for the user interface
+
+Pandas for tabular data
+
+Optional NumPy for numerical processing
+
+No external paid APIs
+
+No cloud AI API dependency
+
+The project must run…
+
+
+### QUERY: "PROJECT ARCHITECTURE"
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…API dependency
+
+The project must run locally and be free to use
+
+The AI scheduler should be implemented locally.
+Do not require OpenAI API keys or other paid API credentials.
+============================================================
+3. >>>PROJECT ARCHITECTURE<<<
+============================================================
+Use this structure:
+AI_Instruction_Scheduler/
+│
+├── app.py
+├── main.py
+├── ai_scheduler.py
+├── pipeline_simulator.py
+├── dependency_analyzer.py
+├── performance.py
+├── examples.py
+├── requirements.txt
+└── README.md
+Keep modules separated by…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…API dependency
+
+The project must run locally and be free to use
+
+The AI scheduler should be implemented locally.
+Do not require OpenAI API keys or other paid API credentials.
+============================================================
+3. >>>PROJECT ARCHITECTURE<<<
+============================================================
+Use this structure:
+AI_Instruction_Scheduler/
+│
+├── app.py
+├── main.py
+├── ai_scheduler.py
+├── pipeline_simulator.py
+├── dependency_analyzer.py
+├── performance.py
+├── examples.py
+├── requirements.txt
+└── README.md
+Keep modules separated by…
+
+
+### QUERY: "SUPPORTED CPU"
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…structure:
+AI_Instruction_Scheduler/
+│
+├── app.py
+├── main.py
+├── ai_scheduler.py
+├── pipeline_simulator.py
+├── dependency_analyzer.py
+├── performance.py
+├── examples.py
+├── requirements.txt
+└── README.md
+Keep modules separated by responsibility.
+============================================================
+4. >>>SUPPORTED CPU<<< INSTRUCTIONS
+============================================================
+Initially support:
+LOAD
+STORE
+ADD
+SUB
+MUL
+DIV
+Examples:
+LOAD R1, 10
+LOAD R2, 20
+ADD R3, R1, R2
+SUB R4, R3, R1
+MUL R5, R3, R4
+DIV R6, R5…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…structure:
+AI_Instruction_Scheduler/
+│
+├── app.py
+├── main.py
+├── ai_scheduler.py
+├── pipeline_simulator.py
+├── dependency_analyzer.py
+├── performance.py
+├── examples.py
+├── requirements.txt
+└── README.md
+Keep modules separated by responsibility.
+============================================================
+4. >>>SUPPORTED CPU<<< INSTRUCTIONS
+============================================================
+Initially support:
+LOAD
+STORE
+ADD
+SUB
+MUL
+DIV
+Examples:
+LOAD R1, 10
+LOAD R2, 20
+ADD R3, R1, R2
+SUB R4, R3, R1
+MUL R5, R3, R4
+DIV R6, R5…
+
+
+### QUERY: "DEPENDENCY ANALYZER"
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…>>>DEPENDENCY ANALYZER<<<
+============================================================
+Implement a real >>>dependency analyzer<<<.
+At minimum detect:
+RAW = Read After Write
+Example:
+I1: LOAD R1, 10
+I2: ADD R3, R1, R2
+Dependency:
+I1 -> I2
+Register: R1
+Also implement, where applicable:
+WAR = Write After Read
+WAW = Write After Write
+Clearly distinguish dependency types.
+Build a dependency graph internally.
+The >>>dependency analyzer<<< must never allow the scheduler to generate an
+illegal instruction order…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…>>>DEPENDENCY ANALYZER<<<
+============================================================
+Implement a real >>>dependency analyzer<<<.
+At minimum detect:
+RAW = Read After Write
+Example:
+I1: LOAD R1, 10
+I2: ADD R3, R1, R2
+Dependency:
+I1 -> I2
+Register: R1
+Also implement, where applicable:
+WAR = Write After Read
+WAW = Write After Write
+Clearly distinguish dependency types.
+Build a dependency graph internally.
+The >>>dependency analyzer<<< must never allow the scheduler to generate an
+illegal instruction order…
+
+
+### QUERY: "PIPELINE MODEL"
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…CPU >>>PIPELINE MODEL<<<
+============================================================
+Simulate a classic 5-stage pipeline:
+IF -> ID -> EX -> MEM -> WB
+Meaning:
+IF  = Instruction Fetch
+ID  = Instruction Decode
+EX  = Execute
+MEM = Memory Access
+WB  = Write Back
+The simulator must execute instructions cycle-by-cycle.
+It must show exactly which stage each instruction occupies during
+each cycle.
+Example:
+      C1 C2 C3 C4 C5 C6 C7I1 LOAD   IF ID EX MEM WB
+I2…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…CPU >>>PIPELINE MODEL<<<
+============================================================
+Simulate a classic 5-stage pipeline:
+IF -> ID -> EX -> MEM -> WB
+Meaning:
+IF  = Instruction Fetch
+ID  = Instruction Decode
+EX  = Execute
+MEM = Memory Access
+WB  = Write Back
+The simulator must execute instructions cycle-by-cycle.
+It must show exactly which stage each instruction occupies during
+each cycle.
+Example:
+      C1 C2 C3 C4 C5 C6 C7I1 LOAD   IF ID EX MEM WB
+I2…
+
+
+### QUERY: "AI-ACCELERATED SCHEDULER"
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…Preserve original program order
+
+Respect dependencies
+
+Issue one instruction at a time
+
+Calculate pipeline stalls
+
+Calculate total completion cycles
+
+This becomes the baseline against which AI scheduling is evaluated.
+============================================================
+9. >>>AI-ACCELERATED SCHEDULER<<<
+============================================================
+This is the MAIN FEATURE of the project.
+Implement a local AI-assisted scheduling system.
+Do not simply rename a normal sorting algorithm as "AI".
+The scheduler must evaluate currently legal…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…Preserve original program order
+
+Respect dependencies
+
+Issue one instruction at a time
+
+Calculate pipeline stalls
+
+Calculate total completion cycles
+
+This becomes the baseline against which AI scheduling is evaluated.
+============================================================
+9. >>>AI-ACCELERATED SCHEDULER<<<
+============================================================
+This is the MAIN FEATURE of the project.
+Implement a local AI-assisted scheduling system.
+Do not simply rename a normal sorting algorithm as "AI".
+The scheduler must evaluate currently legal…
+
+
+### QUERY: "PERFORMANCE METRICS"
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…Project title
+Overview
+Problem statement
+Objectives
+System architecture
+How AI scheduling works
+CPU pipeline model
+Supported instructions
+Features
+Folder structure
+Installation
+Running instructions
+Example input
+Expected output
+>>>Performance metrics<<<
+How to explain the project in a viva
+Future scope
+============================================================
+26. VIVA DEMONSTRATION MODE
+============================================================
+Add a clear workflow so a student can demonstrate the project in
+front of faculty.
+Recommended demonstration:
+Load "Mixed Workload"
+
+Show…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…Project title
+Overview
+Problem statement
+Objectives
+System architecture
+How AI scheduling works
+CPU pipeline model
+Supported instructions
+Features
+Folder structure
+Installation
+Running instructions
+Example input
+Expected output
+>>>Performance metrics<<<
+How to explain the project in a viva
+Future scope
+============================================================
+26. VIVA DEMONSTRATION MODE
+============================================================
+Add a clear workflow so a student can demonstrate the project in
+front of faculty.
+Recommended demonstration:
+Load "Mixed Workload"
+
+Show…
+
+
+### QUERY: "USER INTERFACE"
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…Python 3.10+
+
+Streamlit for the >>>user interface<<<
+
+Pandas for tabular data
+
+Optional NumPy for numerical processing
+
+No external paid APIs
+
+No cloud AI API dependency
+
+The project must run locally and be free to use
+
+The AI scheduler should be implemented locally.
+Do not require OpenAI API keys or other paid API credentials.
+============================================================
+3. PROJECT ARCHITECTURE
+============================================================
+Use this structure:
+AI_Instruction_Scheduler/
+│
+├── app…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…Python 3.10+
+
+Streamlit for the >>>user interface<<<
+
+Pandas for tabular data
+
+Optional NumPy for numerical processing
+
+No external paid APIs
+
+No cloud AI API dependency
+
+The project must run locally and be free to use
+
+The AI scheduler should be implemented locally.
+Do not require OpenAI API keys or other paid API credentials.
+============================================================
+3. PROJECT ARCHITECTURE
+============================================================
+Use this structure:
+AI_Instruction_Scheduler/
+│
+├── app…
+
+
+### QUERY: "EXAMPLES.PY"
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…AI_Instruction_Scheduler/
+│
+├── app.py
+├── main.py
+├── ai_scheduler.py
+├── pipeline_simulator.py
+├── dependency_analyzer.py
+├── performance.py
+├── >>>examples.py<<<
+├── requirements.txt
+└── README.md
+Keep modules separated by responsibility.
+============================================================
+4. SUPPORTED CPU INSTRUCTIONS
+============================================================
+Initially support:
+LOAD
+STORE
+ADD
+SUB
+MUL
+DIV
+Examples:
+LOAD R1, 10
+LOAD R2, 20
+ADD R3, R1, R2
+SUB R4, R3, R1
+MUL R5, R3, R4
+DIV R6, R5, R2…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…AI_Instruction_Scheduler/
+│
+├── app.py
+├── main.py
+├── ai_scheduler.py
+├── pipeline_simulator.py
+├── dependency_analyzer.py
+├── performance.py
+├── >>>examples.py<<<
+├── requirements.txt
+└── README.md
+Keep modules separated by responsibility.
+============================================================
+4. SUPPORTED CPU INSTRUCTIONS
+============================================================
+Initially support:
+LOAD
+STORE
+ADD
+SUB
+MUL
+DIV
+Examples:
+LOAD R1, 10
+LOAD R2, 20
+ADD R3, R1, R2
+SUB R4, R3, R1
+MUL R5, R3, R4
+DIV R6, R5, R2…
+
+
+### QUERY: "README.MD"
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…AI_Instruction_Scheduler/
+│
+├── app.py
+├── main.py
+├── ai_scheduler.py
+├── pipeline_simulator.py
+├── dependency_analyzer.py
+├── performance.py
+├── examples.py
+├── requirements.txt
+└── >>>README.md<<<
+Keep modules separated by responsibility.
+============================================================
+4. SUPPORTED CPU INSTRUCTIONS
+============================================================
+Initially support:
+LOAD
+STORE
+ADD
+SUB
+MUL
+DIV
+Examples:
+LOAD R1, 10
+LOAD R2, 20
+ADD R3, R1, R2
+SUB R4, R3, R1
+MUL R5, R3, R4
+DIV R6, R5, R2…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…AI_Instruction_Scheduler/
+│
+├── app.py
+├── main.py
+├── ai_scheduler.py
+├── pipeline_simulator.py
+├── dependency_analyzer.py
+├── performance.py
+├── examples.py
+├── requirements.txt
+└── >>>README.md<<<
+Keep modules separated by responsibility.
+============================================================
+4. SUPPORTED CPU INSTRUCTIONS
+============================================================
+Initially support:
+LOAD
+STORE
+ADD
+SUB
+MUL
+DIV
+Examples:
+LOAD R1, 10
+LOAD R2, 20
+ADD R3, R1, R2
+SUB R4, R3, R1
+MUL R5, R3, R4
+DIV R6, R5, R2…
+
+
+### QUERY: "VIVA DEMONSTRATION"
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…ready set, live scores, feature vector, and why that instruction won
+
+View IF / ID / EX / MEM / WB / ST Gantt charts for both schedules
+
+Use the sidebar **>>>Viva demonstration<<<** checklist (Mixed Workload is the recommended walkthrough)
+
+Run locally
+pip install -r requirements.txt
+streamlit run app.pyCLI (same engine): python main.py --example &quot;Mixed Workload&quot;
+Tests: python -m unittest tests.test_instruction_scheduler…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…AI scheduling works
+CPU pipeline model
+Supported instructions
+Features
+Folder structure
+Installation
+Running instructions
+Example input
+Expected output
+Performance metrics
+How to explain the project in a viva
+Future scope
+============================================================
+26. >>>VIVA DEMONSTRATION<<< MODE
+============================================================
+Add a clear workflow so a student can demonstrate the project in
+front of faculty.
+Recommended demonstration:
+Load "Mixed Workload"
+
+Show instructions
+
+Run simulation
+
+Show dependency graph
+
+Show traditional order…
+
+
+### QUERY: "FINAL DELIVERABLE"
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…pipeline visualization
+
+dependency graph
+
+performance charts
+
+Seventh:
+tests
+
+cleanup
+
+README
+
+After each major stage, run the application and fix all errors before
+continuing.
+Do not leave broken code for later.
+============================================================
+31. >>>FINAL DELIVERABLE<<<
+============================================================
+The finished project must run locally with:
+pip install -r requirements.txt
+then:
+streamlit run app.py
+It must provide a complete interactive demonstration of:
+AI-Accelerated Instruction Scheduling
+with real…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…pipeline visualization
+
+dependency graph
+
+performance charts
+
+Seventh:
+tests
+
+cleanup
+
+README
+
+After each major stage, run the application and fix all errors before
+continuing.
+Do not leave broken code for later.
+============================================================
+31. >>>FINAL DELIVERABLE<<<
+============================================================
+The finished project must run locally with:
+pip install -r requirements.txt
+then:
+streamlit run app.py
+It must provide a complete interactive demonstration of:
+AI-Accelerated Instruction Scheduling
+with real…
+
+
+### QUERY: dependency_analyzer.py ERROR fts5: syntax error near "."
+
+
+### QUERY: performance.py ERROR fts5: syntax error near "."
+
+
+### QUERY: examples.py ERROR fts5: syntax error near "."
+
+
+### QUERY: folder structure
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…Project title
+Overview
+Problem statement
+Objectives
+System architecture
+How AI scheduling works
+CPU pipeline model
+Supported instructions
+Features
+>>>Folder<<< >>>structure<<<
+Installation
+Running instructions
+Example input
+Expected output
+Performance metrics
+How to explain the project in a viva
+Future scope
+============================================================
+26. VIVA DEMONSTRATION MODE
+============================================================
+Add a clear workflow so a student can demonstrate the project in
+front of faculty.
+Recommended demonstration:
+Load "Mixed Workload"
+
+Show…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…Project title
+Overview
+Problem statement
+Objectives
+System architecture
+How AI scheduling works
+CPU pipeline model
+Supported instructions
+Features
+>>>Folder<<< >>>structure<<<
+Installation
+Running instructions
+Example input
+Expected output
+Performance metrics
+How to explain the project in a viva
+Future scope
+============================================================
+26. VIVA DEMONSTRATION MODE
+============================================================
+Add a clear workflow so a student can demonstrate the project in
+front of faculty.
+Recommended demonstration:
+Load "Mixed Workload"
+
+Show…
+
+
+### QUERY: streamlit
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…APP.PY
+============================================================
+app.py is the >>>Streamlit<<< frontend.
+Run with:
+>>>streamlit<<< run app.py
+The >>>Streamlit<<< UI must call the reusable engine modules.
+Do not duplicate scheduling logic inside app.py.
+============================================================
+21. DEPENDENCY_ANALYZER.PY
+============================================================
+Create a dedicated dependency analyzer.
+Provide functions for:
+RAW detection
+
+WAR detection
+
+WAW detection
+
+dependency graph creation
+
+dependency validation
+
+============================================================
+22. PERFORMANCE.PY
+============================================================
+Create reusable performance functions:
+calculate_speedup()
+calculate…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…APP.PY
+============================================================
+app.py is the >>>Streamlit<<< frontend.
+Run with:
+>>>streamlit<<< run app.py
+The >>>Streamlit<<< UI must call the reusable engine modules.
+Do not duplicate scheduling logic inside app.py.
+============================================================
+21. DEPENDENCY_ANALYZER.PY
+============================================================
+Create a dedicated dependency analyzer.
+Provide functions for:
+RAW detection
+
+WAR detection
+
+WAW detection
+
+dependency graph creation
+
+dependency validation
+
+============================================================
+22. PERFORMANCE.PY
+============================================================
+Create reusable performance functions:
+calculate_speedup()
+calculate…
+
+
+### QUERY: IF ID EX MEM WB
+
+[bc-f99abb1c-c376-401a-af09-326bbc63057d]
+…>>>IF<<< -> >>>ID<<< -> >>>EX<<< -> >>>MEM<<< -> >>>WB<<<
+Meaning:
+>>>IF<<<  = Instruction Fetch
+>>>ID<<<  = Instruction Decode
+>>>EX<<<  = Execute
+>>>MEM<<< = Memory Access
+>>>WB<<<  = Write Back
+The simulator must execute instructions cycle-by-cycle.
+It must show exactly which stage each instruction occupies during
+each cycle.
+Example:
+      C1 C2 C3 C4 C5 C6 C7I1 LOAD   >>>IF<<< >>>ID<<< >>>EX<<< >>>MEM<<< >>>WB<<<
+I2 ADD       >>>IF<<< >>>ID<<< >>>EX<<< >>>MEM<<< >>>WB<<<
+Dependency stalls must…
+
+[bc-fd306617-554e-4309-8da7-fffce395f32a]
+…>>>IF<<< -> >>>ID<<< -> >>>EX<<< -> >>>MEM<<< -> >>>WB<<<
+Meaning:
+>>>IF<<<  = Instruction Fetch
+>>>ID<<<  = Instruction Decode
+>>>EX<<<  = Execute
+>>>MEM<<< = Memory Access
+>>>WB<<<  = Write Back
+The simulator must execute instructions cycle-by-cycle.
+It must show exactly which stage each instruction occupies during
+each cycle.
+Example:
+      C1 C2 C3 C4 C5 C6 C7I1 LOAD   >>>IF<<< >>>ID<<< >>>EX<<< >>>MEM<<< >>>WB<<<
+I2 ADD       >>>IF<<< >>>ID<<< >>>EX<<< >>>MEM<<< >>>WB<<<
+Dependency stalls must…

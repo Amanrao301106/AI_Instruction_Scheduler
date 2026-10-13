@@ -1,0 +1,10 @@
+fts_rowid
+source
+scope
+id
+title
+branches
+updated_at
+is_archived
+root_fingerprint
+cache_fingerprint

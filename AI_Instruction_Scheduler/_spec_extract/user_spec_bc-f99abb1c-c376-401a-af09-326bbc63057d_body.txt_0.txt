@@ -1,0 +1,792 @@
+I want you to build a complete practical Computer Organization and Architecture project titled:
+"AI-Accelerated Instruction Scheduling"
+IMPORTANT:
+This must be a REAL, WORKING, INTERACTIVE software project.
+Do NOT make it a theoretical-only project.
+Do NOT create fake AI results.
+Do NOT hard-code performance numbers.
+All scheduling, dependencies, pipeline execution, metrics, and comparisons must be calculated dynamically.
+The project should be suitable for a college-level COA practical/ERLA demonstration.
+============================================================
+PROJECT OBJECTIVE
+============================================================
+
+Build an interactive simulator that demonstrates how AI-assisted
+instruction scheduling can improve CPU instruction execution.
+The system must allow a user to:
+Enter a set of CPU instructions.
+
+Parse and validate those instructions.
+
+Detect instruction dependencies.
+
+Identify scheduling opportunities.
+
+Generate a traditional/in-order execution schedule.
+
+Generate an AI-assisted optimized schedule.
+
+Simulate both schedules on a CPU pipeline.
+
+Display pipeline execution cycle-by-cycle.
+
+Calculate:
+- Total cycles
+- Pipeline stalls
+- Pipeline utilization
+- Speedup
+- Cycle improvement
+- Stall reduction
+
+Compare traditional and AI scheduling.
+
+Clearly explain why the AI scheduler selected particular instructions.
+
+The final application must visually demonstrate the benefits of
+instruction scheduling rather than merely print theoretical concepts.
+============================================================
+2. TECHNOLOGY STACK
+============================================================
+Use:
+Python 3.10+
+
+Streamlit for the user interface
+
+Pandas for tabular data
+
+Optional NumPy for numerical processing
+
+No external paid APIs
+
+No cloud AI API dependency
+
+The project must run locally and be free to use
+
+The AI scheduler should be implemented locally.
+Do not require OpenAI API keys or other paid API credentials.
+============================================================
+3. PROJECT ARCHITECTURE
+============================================================
+Use this structure:
+AI_Instruction_Scheduler/
+│
+├── app.py
+├── main.py
+├── ai_scheduler.py
+├── pipeline_simulator.py
+├── dependency_analyzer.py
+├── performance.py
+├── examples.py
+├── requirements.txt
+└── README.md
+Keep modules separated by responsibility.
+============================================================
+4. SUPPORTED CPU INSTRUCTIONS
+============================================================
+Initially support:
+LOAD
+STORE
+ADD
+SUB
+MUL
+DIV
+Examples:
+LOAD R1, 10
+LOAD R2, 20
+ADD R3, R1, R2
+SUB R4, R3, R1
+MUL R5, R3, R4
+DIV R6, R5, R2
+STORE R6, 100
+The parser must reject malformed instructions with clear error messages.
+The user must NOT need to enter instruction numbers manually.
+For example, the user enters:
+LOAD R1, 10
+LOAD R2, 20
+ADD R3, R1, R2
+The application automatically labels them:
+I1
+I2
+I3
+============================================================
+5. INSTRUCTION DATA MODEL
+============================================================
+Create an Instruction class containing:
+instruction number
+
+operation
+
+destination register
+
+source registers
+
+optional immediate value
+
+optional memory address
+
+For example:
+I3:
+operation = ADD
+destination = R3
+sources = [R1, R2]
+============================================================
+6. DEPENDENCY ANALYZER
+============================================================
+Implement a real dependency analyzer.
+At minimum detect:
+RAW = Read After Write
+Example:
+I1: LOAD R1, 10
+I2: ADD R3, R1, R2
+Dependency:
+I1 -> I2
+Register: R1
+Also implement, where applicable:
+WAR = Write After Read
+WAW = Write After Write
+Clearly distinguish dependency types.
+Build a dependency graph internally.
+The dependency analyzer must never allow the scheduler to generate an
+illegal instruction order.
+Example:
+I1 -> I3
+I2 -> I3
+I3 -> I5
+I4 -> I5
+I5 -> I6
+============================================================
+7. CPU PIPELINE MODEL
+============================================================
+Simulate a classic 5-stage pipeline:
+IF -> ID -> EX -> MEM -> WB
+Meaning:
+IF  = Instruction Fetch
+ID  = Instruction Decode
+EX  = Execute
+MEM = Memory Access
+WB  = Write Back
+The simulator must execute instructions cycle-by-cycle.
+It must show exactly which stage each instruction occupies during
+each cycle.
+Example:
+      C1 C2 C3 C4 C5 C6 C7I1 LOAD   IF ID EX MEM WB
+I2 ADD       IF ID EX MEM WB
+Dependency stalls must be calculated from the actual simulation.
+Never hard-code stalls.
+============================================================
+8. TRADITIONAL SCHEDULER
+============================================================
+Implement a baseline traditional scheduler.
+The baseline should represent a conventional in-order scheduling
+strategy.
+Characteristics:
+Preserve original program order
+
+Respect dependencies
+
+Issue one instruction at a time
+
+Calculate pipeline stalls
+
+Calculate total completion cycles
+
+This becomes the baseline against which AI scheduling is evaluated.
+============================================================
+9. AI-ACCELERATED SCHEDULER
+============================================================
+This is the MAIN FEATURE of the project.
+Implement a local AI-assisted scheduling system.
+Do not simply rename a normal sorting algorithm as "AI".
+The scheduler must evaluate currently legal/ready instructions and
+score them dynamically.
+The scoring model should consider several features, including:
+Dependency criticality
+
+Number of dependent instructions
+
+Number of instructions that can be unlocked
+
+Critical-path depth
+
+Instruction latency/operation cost
+
+Pipeline waiting impact
+
+Independent-instruction opportunity
+
+Original instruction position as a tie-breaker
+
+The AI scheduler must choose from currently legal instructions.
+At each decision:
+READY INSTRUCTIONS
+       ↓
+FEATURE EXTRACTION
+       ↓
+SCORING / AI DECISION
+       ↓
+SELECT BEST INSTRUCTION
+       ↓
+UPDATE CPU/DEPENDENCY STATE
+       ↓
+REPEAT
+The AI scheduler must never violate dependencies.
+============================================================
+10. AI MODEL REQUIREMENT
+============================================================
+Start with a transparent local AI/ML scheduling approach.
+Use a deterministic heuristic/learning-inspired scoring model as the
+initial AI implementation.
+The system should expose the feature scores so the user can see why
+the scheduler chose an instruction.
+Example:
+Step 3
+Ready:
+I3
+I4
+I6
+Scores:
+I3 = 18.4
+I4 = 24.2
+I6 = 9.1
+Selected:
+I4
+Reason:
+independent of current blocked chain
+
+unlocks future instruction
+
+useful pipeline opportunity
+
+low estimated cost
+
+Do NOT fake these values.
+Calculate them.
+============================================================
+11. FUTURE AI EXTENSION
+============================================================
+Design the AI module so it can later support a real trained ML model.
+For example:
+AI Scheduler
+|
+|-- heuristic mode
+|
+|-- ML mode
+|
+|-- reinforcement learning mode (future)
+Do not require machine learning training for the first version.
+But the software architecture should make that extension easy.
+============================================================
+12. PIPELINE-AWARE AI SCHEDULING
+============================================================
+The biggest requirement is that the AI schedule must actually affect
+the pipeline simulation.
+DO NOT:
+AI Scheduler
+    ↓
+generate different order
+    ↓
+ignore the order in simulator
+Instead:
+AI Scheduler
+    ↓
+AI Optimized Instruction Order
+    ↓
+Pipeline Simulator
+    ↓
+Real Execution Cycles
+    ↓
+Real Stalls
+    ↓
+Real Metrics
+The traditional and AI orders must be independently simulated.
+============================================================
+13. PERFORMANCE METRICS
+============================================================
+Calculate dynamically:
+Total Cycles
+Pipeline Stalls
+Pipeline Utilization
+Cycle Improvement:
+((Traditional Cycles - AI Cycles) /
+ Traditional Cycles) * 100
+Stall Reduction:
+((Traditional Stalls - AI Stalls) /
+ Traditional Stalls) * 100
+Speedup:
+Traditional Cycles / AI Cycles
+Never hard-code these values.
+============================================================
+14. EDGE CASES
+============================================================
+Correctly handle:
+Empty input
+
+Invalid instruction
+
+Duplicate syntax
+
+Missing register
+
+Unknown instruction
+
+Dependency cycles
+
+Completely independent instructions
+
+All instructions dependent
+
+Long dependency chains
+
+Multiple independent branches
+
+No RAW dependencies
+
+Single instruction
+
+Large instruction sets
+
+Give user-friendly error messages.
+============================================================
+15. EXAMPLE WORKLOADS
+============================================================
+Provide predefined workloads.
+Example 1:
+Basic Dependency
+LOAD R1, 10
+LOAD R2, 20
+ADD R3, R1, R2
+LOAD R4, 5
+MUL R5, R3, R4
+STORE R5, 100
+Example 2:
+Mixed Workload
+LOAD R1, 10
+LOAD R2, 20
+ADD R3, R1, R2
+LOAD R6, 50
+LOAD R7, 60
+SUB R8, R6, R7
+MUL R9, R3, R8
+STORE R9, 200
+Example 3:
+Independent Instructions
+LOAD R1, 10
+LOAD R2, 20
+ADD R3, R1, R2
+LOAD R6, 50
+LOAD R7, 60
+SUB R8, R6, R7
+LOAD R10, 100
+ADD R11, R10, R1
+MUL R12, R3, R8
+STORE R12, 200
+Example 4:
+Long Dependency Chain
+LOAD R1, 10
+LOAD R2, 20
+ADD R3, R1, R2
+SUB R4, R3, R1
+MUL R5, R4, R2
+ADD R6, R5, R3
+STORE R6, 100
+Add additional workloads that clearly demonstrate scheduling benefits.
+============================================================
+16. USER INTERFACE
+============================================================
+Build a polished Streamlit dashboard.
+DO NOT display:
+"COA Practical Project"
+at the top.
+The main title should be:
+AI-Accelerated Instruction Scheduling
+Subtitle:
+Dependency-aware CPU instruction scheduling and pipeline optimization
+The UI should include:
+HEADER
+AI-Accelerated Instruction Scheduling
+Dependency-aware CPU scheduling
+5-stage pipeline simulation
+AI optimization and performance comparison
+SIDEBAR
+Workload selector
+Options:
+Custom
+Basic Dependency
+Mixed Workload
+Independent Instructions
+Long Dependency Chain
+CPU model:
+5-stage pipeline
+IF → ID → EX → MEM → WB
+INSTRUCTION INPUT
+Large editable text box.
+User can enter instructions.
+Button:
+Run AI Scheduling Simulation
+Buttons:
+Load Example
+Clear
+Reset
+PERFORMANCE CARDS
+Traditional Cycles
+AI Cycles
+Cycle Improvement
+Stall Reduction
+Speedup
+Use clear visual cards.
+EXECUTION ORDER
+Traditional:
+I1 → I2 → I3 → I4 ...
+AI:
+I1 → I3 → I2 → I4 ...
+Make the AI order visually distinct.
+DEPENDENCY ANALYSIS
+Show:
+Producer
+Consumer
+Register
+Dependency Type
+Also show a visual dependency graph.
+Example:
+I1 ─────┐
+        ├──> I3 ───> I5 ───> I6
+I2 ─────┘
+I4 ────────────────> I5
+The graph must be generated dynamically from user input.
+Do not use a static image.
+AI DECISION PANEL
+Show:
+Step
+Ready Instructions
+Scores
+Selected Instruction
+Reason
+Example:
+Step 4
+Ready:
+I4, I6
+I4 score: 27.5
+I6 score: 9.7
+Selected: I4
+Reason:
+Independent instruction can occupy a useful scheduling slot.
+PIPELINE VISUALIZATION
+This is important.
+Create a graphical-looking Gantt/timeline visualization.
+Rows:
+I1
+I2
+I3
+I4
+...
+Columns:
+Cycle 1
+Cycle 2
+Cycle 3
+Cycle 4
+...
+Each cell should show:
+IF
+ID
+EX
+MEM
+WB
+ST
+Use distinct visual styling for pipeline stages.
+Display:
+TRADITIONAL PIPELINE
+and
+AI-OPTIMIZED PIPELINE
+side by side or one below the other.
+The user must be able to visually see how scheduling changes execution.
+PERFORMANCE CHART
+Add a chart comparing:
+Traditional vs AI
+Metrics:
+Cycles
+Stalls
+Utilization
+Also show speedup.
+The chart must use actual calculated values.
+RESULT SUMMARY
+Display a clear natural-language summary such as:
+"AI scheduling reduced the execution time from 19 cycles to
+17 cycles, giving a 10.53% improvement and 1.12x speedup."
+Generate this text dynamically from actual metrics.
+============================================================
+17. UI BEHAVIOR
+============================================================
+IMPORTANT:
+Before the user runs the simulation, do NOT show stale results from a
+previous run.
+After clicking Run:
+Clear previous results.
+Parse instructions.
+Validate.
+Analyze dependencies.
+Run traditional scheduler.
+Run AI scheduler.
+Simulate both.
+Calculate metrics.
+Display fresh results.
+Store the most recent valid simulation in Streamlit session state.
+============================================================
+18. CODE QUALITY
+============================================================
+Write clean, modular Python.
+Use:
+functions
+
+classes
+
+type hints where useful
+
+docstrings
+
+clear variable names
+
+error handling
+
+Avoid:
+duplicate code
+
+global mutable state
+
+hard-coded performance results
+
+fake AI outputs
+
+unnecessary external dependencies
+
+============================================================
+19. MAIN.PY
+============================================================
+main.py should contain reusable core models/functions where appropriate.
+It should remain executable from the command line:
+python main.py
+When executed directly, it should provide a CLI version of the
+simulation.
+============================================================
+20. APP.PY
+============================================================
+app.py is the Streamlit frontend.
+Run with:
+streamlit run app.py
+The Streamlit UI must call the reusable engine modules.
+Do not duplicate scheduling logic inside app.py.
+============================================================
+21. DEPENDENCY_ANALYZER.PY
+============================================================
+Create a dedicated dependency analyzer.
+Provide functions for:
+RAW detection
+
+WAR detection
+
+WAW detection
+
+dependency graph creation
+
+dependency validation
+
+============================================================
+22. PERFORMANCE.PY
+============================================================
+Create reusable performance functions:
+calculate_speedup()
+calculate_cycle_improvement()
+calculate_stall_reduction()
+calculate_utilization()
+All calculations must be dynamic.
+============================================================
+23. EXAMPLES.PY
+============================================================
+Store predefined instruction workloads here.
+The UI imports them.
+============================================================
+24. REQUIREMENTS.TXT
+============================================================
+Create:
+streamlit
+pandas
+numpy
+Only include packages actually needed.
+============================================================
+25. README.MD
+============================================================
+Create a complete README containing:
+Project title
+Overview
+Problem statement
+Objectives
+System architecture
+How AI scheduling works
+CPU pipeline model
+Supported instructions
+Features
+Folder structure
+Installation
+Running instructions
+Example input
+Expected output
+Performance metrics
+How to explain the project in a viva
+Future scope
+============================================================
+26. VIVA DEMONSTRATION MODE
+============================================================
+Add a clear workflow so a student can demonstrate the project in
+front of faculty.
+Recommended demonstration:
+Load "Mixed Workload"
+
+Show instructions
+
+Run simulation
+
+Show dependency graph
+
+Show traditional order
+
+Show AI order
+
+Show traditional pipeline
+
+Show AI pipeline
+
+Show cycle difference
+
+Show stall reduction
+
+Show speedup
+
+Explain why the AI moved an independent instruction
+
+============================================================
+27. IMPORTANT TECHNICAL CORRECTNESS
+============================================================
+Do not claim AI improved performance unless it actually did.
+Some workloads may legitimately produce:
+0% cycle improvement
+That is acceptable.
+The application should report:
+"No cycle improvement for this workload."
+Rather than manipulating the results.
+However, provide example workloads where the scheduling algorithm has
+a genuine opportunity to improve the schedule.
+============================================================
+28. TESTING
+============================================================
+Create tests for:
+parser
+
+dependency analyzer
+
+traditional scheduler
+
+AI scheduler
+
+pipeline simulator
+
+performance calculations
+
+Verify that:
+All dependencies remain valid.
+
+AI order contains every instruction exactly once.
+
+Traditional order contains every instruction exactly once.
+
+AI order never violates dependencies.
+
+Pipeline cycles are positive.
+
+Performance values match the simulation.
+
+No hard-coded metric values exist.
+
+============================================================
+29. FINAL USER EXPERIENCE
+============================================================
+The final application should feel like an actual CPU instruction
+scheduling laboratory tool, not a simple Python script.
+The user should be able to experiment with different workloads and
+immediately see how instruction scheduling changes:
+execution order
+
+pipeline behavior
+
+stalls
+
+utilization
+
+cycles
+
+speedup
+
+The application should be responsive and easy to understand.
+============================================================
+30. DEVELOPMENT PROCESS
+============================================================
+Build the project incrementally.
+First:
+instruction model
+
+parser
+
+dependency analyzer
+
+Second:
+traditional scheduler
+
+pipeline simulator
+
+Third:
+AI scheduler
+
+Fourth:
+integrated performance comparison
+
+Fifth:
+Streamlit UI
+
+Sixth:
+graphical pipeline visualization
+
+dependency graph
+
+performance charts
+
+Seventh:
+tests
+
+cleanup
+
+README
+
+After each major stage, run the application and fix all errors before
+continuing.
+Do not leave broken code for later.
+============================================================
+31. FINAL DELIVERABLE
+============================================================
+The finished project must run locally with:
+pip install -r requirements.txt
+then:
+streamlit run app.py
+It must provide a complete interactive demonstration of:
+AI-Accelerated Instruction Scheduling
+with real:
+Instruction parsing
+Dependency analysis
+Traditional scheduling
+AI scheduling
+CPU pipeline simulation
+Performance measurement
+Visualization
+Comparison
+Do not make the project theoretical.
+Do not fake AI.
+Do not hard-code performance.
+Do not remove the actual CPU scheduling logic in favor of a mock UI.
+Build the complete working application.
